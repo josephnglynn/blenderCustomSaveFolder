@@ -125,8 +125,8 @@ def register():
 
 
 def unregister():
-    bpy.utils.register_class(SimpleOperator)
     bpy.types.TOPBAR_MT_editor_menus.remove(TOPBAR_MT_custom_menu.menu_draw)
+    bpy.utils.unregister_class(SimpleOperator)
     bpy.utils.unregister_class(TOPBAR_MT_custom_menu)
 
 
