@@ -105,7 +105,7 @@ class SimpleOperator(bpy.types.Operator):
 
 
 class TOPBAR_MT_custom_menu(bpy.types.Menu):
-    bl_label = "Custom Menu"
+    bl_label = "Custom Render"
 
     def draw(self, context):
         layout = self.layout
