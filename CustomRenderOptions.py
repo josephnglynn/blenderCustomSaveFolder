@@ -25,7 +25,7 @@ def checkIfDirectoriesExist(projectName):
         os.mkdir(RenderOutputDir + "/" + projectName)
 
 def getVersion(projectName):
-    location = RenderOutputDir + "/" + projectName + "/config.json"
+    location = RenderOutputDir + "/" + projectName + "/config"
     v = ""
     print("starting")
     if os.path.isfile(location):
