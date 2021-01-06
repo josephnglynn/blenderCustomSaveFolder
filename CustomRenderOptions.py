@@ -22,11 +22,11 @@ def checkIfDirectoriesExist(projectName):
     if (path.exists(RenderOutputDir) == False):
         os.mkdir(RenderOutputDir)
     
-    if (path.exists(RenderOutputDir + "/" + projectName) == False):
-        os.mkdir(RenderOutputDir + "/" + projectName)
+    if (path.exists(RenderOutputDir + projectName) == False):
+        os.mkdir(RenderOutputDir + projectName)
 
 def getVersion(projectName, dir):
-    location = dir + "/" + projectName + "/config"
+    location = dir + projectName + "/config"
     v = ""
     print("starting")
     if os.path.isfile(location):
