@@ -24,6 +24,12 @@ def checkIfDirectoriesExist(projectName):
     
     if (path.exists(RenderOutputDir + projectName) == False):
         os.mkdir(RenderOutputDir + projectName)
+    
+    if (path.exists(RenderAnimationDir) == False):
+        os.mkdir(RenderAnimationDir)
+    
+    if (path.exists(RenderAnimationDir + projectName) == False):
+        os.mkdir(RenderAnimationDir + projectName)
 
 def getVersion(projectName, dir):
     location = dir + projectName + "/config"
@@ -91,6 +97,7 @@ class SimpleRender(bpy.types.Operator):
     
     def execute(self, context):
         bpy.data.filepath
+        bpy.context.scene.render.image_settings.file_format = "PNG"
         bpy.context.scene.render.filepath = getFileNameAndLocation(RenderOutputDir)
         bpy.ops.render.render('INVOKE_DEFAULT',animation=False, write_still=True)
         return {'FINISHED'}
@@ -101,6 +108,7 @@ class SimpleRenderAnimation(bpy.types.Operator):
     
     def execute(self, context):
         bpy.data.filepath
+        bpy.context.scene.render.image_settings.file_format = "FFMPEG"
         bpy.context.scene.render.filepath = getFileNameAndLocation(RenderAnimationDir)
         bpy.ops.render.render('INVOKE_DEFAULT',animation=True, write_still=True)
         return {'FINISHED'}
