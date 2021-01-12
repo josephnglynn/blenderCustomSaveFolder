@@ -109,6 +109,7 @@ class SimpleRenderAnimation(bpy.types.Operator):
     def execute(self, context):
         bpy.data.filepath
         bpy.context.scene.render.image_settings.file_format = "FFMPEG"
+        bpy.context.scene.render.ffmpeg.constant_rate_factor = "PERC_LOSSLESS"
         bpy.context.scene.render.filepath = getFileNameAndLocation(RenderAnimationDir)
         bpy.ops.render.render('INVOKE_DEFAULT',animation=True, write_still=True)
         return {'FINISHED'}
