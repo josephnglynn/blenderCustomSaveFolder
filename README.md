@@ -1,4 +1,4 @@
-# blenderCustomSaveFolder
+# Blender Custom Save Folder
 
 ### usage
 Open the Preferences ‣ Add-ons ‣ Install… and select the downloaded python file.
