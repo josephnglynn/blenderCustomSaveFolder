@@ -6,7 +6,7 @@ bl_info = {
 
 
 
-import bpy, os, sys, ntpath
+import bpy, os, ntpath
 import os.path
 from os import path
 from os.path import expanduser
@@ -96,7 +96,6 @@ class SimpleRender(bpy.types.Operator):
     bl_label = "Render"
     
     def execute(self, context):
-        bpy.data.filepath
         bpy.context.scene.render.image_settings.file_format = "PNG"
         bpy.context.scene.render.filepath = getFileNameAndLocation(RenderOutputDir)
         bpy.ops.render.render('INVOKE_DEFAULT',animation=False, write_still=True)
@@ -107,7 +106,6 @@ class SimpleRenderAnimation(bpy.types.Operator):
     bl_label = "Render Animation"
     
     def execute(self, context):
-        bpy.data.filepath
         bpy.context.scene.render.image_settings.file_format = "FFMPEG"
         bpy.context.scene.render.ffmpeg.constant_rate_factor = "PERC_LOSSLESS"
         bpy.context.scene.render.filepath = getFileNameAndLocation(RenderAnimationDir)
@@ -127,7 +125,6 @@ class TOPBAR_MT_custom_menu(bpy.types.Menu):
 
     def menu_draw(self, context):
         self.layout.menu("TOPBAR_MT_custom_menu")
-
 
 
 
