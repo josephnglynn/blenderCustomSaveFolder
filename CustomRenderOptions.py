@@ -7,7 +7,6 @@ bl_info = {
 
 
 import bpy, os, ntpath
-import os.path
 from os import path
 from os.path import expanduser
 
