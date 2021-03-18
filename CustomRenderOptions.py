@@ -1,15 +1,13 @@
+import ntpath
+import os
+import bpy
+from os.path import expanduser
+from os import path
 bl_info = {
     "name": "Render TO Specific Directory",
     "blender": (2, 80, 0),
     "category": "Render",
 }
-
-
-
-import bpy, os, ntpath
-from os import path
-from os.path import expanduser
-
 
 
 home = expanduser("~")
@@ -20,15 +18,16 @@ RenderAnimationDir = home + "/Documents/Blender Video Outputs/"
 def checkIfDirectoriesExist(projectName):
     if (path.exists(RenderOutputDir) == False):
         os.mkdir(RenderOutputDir)
-    
+
     if (path.exists(RenderOutputDir + projectName) == False):
         os.mkdir(RenderOutputDir + projectName)
-    
+
     if (path.exists(RenderAnimationDir) == False):
         os.mkdir(RenderAnimationDir)
-    
+
     if (path.exists(RenderAnimationDir + projectName) == False):
         os.mkdir(RenderAnimationDir + projectName)
+
 
 def getVersion(projectName, dir):
     location = dir + projectName + "/config"
@@ -57,7 +56,7 @@ def getVersion(projectName, dir):
             config.writelines(writeToFile)
             for i in writeToFile:
                 v += i
-            
+
         else:
             stringVersion = str(version)
             strings = []
@@ -73,7 +72,7 @@ def getVersion(projectName, dir):
             config.seek(0)
             config.writelines(finalVersion)
             v = finalVersion
-        
+
     else:
         config = open(location, 'w+')
         config.writelines("1.0")
@@ -86,32 +85,34 @@ def getFileNameAndLocation(dir):
     projectName = os.path.splitext(ntpath.basename(bpy.data.filepath))[0]
     checkIfDirectoriesExist(projectName=projectName)
     version = getVersion(projectName=projectName, dir=dir)
-    fileName = dir + projectName + "/" + projectName + "_v" + version + "." + str(bpy.context.scene.render.image_settings.file_format).lower()
+    fileName = dir + projectName + "/" + projectName + "_v" + version + \
+        "." + str(bpy.context.scene.render.image_settings.file_format).lower()
     return fileName
-    
+
 
 class SimpleRender(bpy.types.Operator):
     bl_idname = "myops.render"
     bl_label = "Render"
-    
+
     def execute(self, context):
         bpy.context.scene.render.image_settings.file_format = "PNG"
-        bpy.context.scene.render.filepath = getFileNameAndLocation(RenderOutputDir)
-        bpy.ops.render.render('INVOKE_DEFAULT',animation=False, write_still=True)
+        bpy.context.scene.render.filepath = getFileNameAndLocation(
+            RenderOutputDir)
+        bpy.ops.render.render(animation=False, write_still=True)
         return {'FINISHED'}
+
 
 class SimpleRenderAnimation(bpy.types.Operator):
     bl_idname = "myops.renderanimation"
     bl_label = "Render Animation"
-    
+
     def execute(self, context):
         bpy.context.scene.render.image_settings.file_format = "FFMPEG"
         bpy.context.scene.render.ffmpeg.constant_rate_factor = "PERC_LOSSLESS"
-        bpy.context.scene.render.filepath = getFileNameAndLocation(RenderAnimationDir)
-        bpy.ops.render.render('INVOKE_DEFAULT',animation=True, write_still=True)
+        bpy.context.scene.render.filepath = getFileNameAndLocation(
+            RenderAnimationDir)
+        bpy.ops.render.render(animation=True, write_still=True)
         return {'FINISHED'}
-
-        
 
 
 class TOPBAR_MT_custom_menu(bpy.types.Menu):
@@ -126,8 +127,6 @@ class TOPBAR_MT_custom_menu(bpy.types.Menu):
         self.layout.menu("TOPBAR_MT_custom_menu")
 
 
-
-
 def register():
     bpy.utils.register_class(SimpleRender)
     bpy.utils.register_class(SimpleRenderAnimation)
@@ -140,7 +139,6 @@ def unregister():
     bpy.utils.unregister_class(SimpleRender)
     bpy.utils.unregister_class(SimpleRenderAnimation)
     bpy.utils.unregister_class(TOPBAR_MT_custom_menu)
-
 
 
 if __name__ == "__main__":
