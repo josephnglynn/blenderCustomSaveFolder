@@ -1,8 +1,9 @@
 import ntpath
 import os
 import bpy
-from os.path import expanduser
-from os import path
+
+
+
 bl_info = {
     "name": "Render TO Specific Directory",
     "blender": (2, 80, 0),
@@ -10,22 +11,22 @@ bl_info = {
 }
 
 
-home = expanduser("~")
+home = os.path.expanduser("~")
 RenderOutputDir = home + "/Documents/Blender Render Outputs/"
 RenderAnimationDir = home + "/Documents/Blender Video Outputs/"
 
 
 def checkIfDirectoriesExist(projectName):
-    if (path.exists(RenderOutputDir) == False):
+    if (os.path.exists(RenderOutputDir) == False):
         os.mkdir(RenderOutputDir)
 
-    if (path.exists(RenderOutputDir + projectName) == False):
+    if (os.path.exists(RenderOutputDir + projectName) == False):
         os.mkdir(RenderOutputDir + projectName)
 
-    if (path.exists(RenderAnimationDir) == False):
+    if (os.path.exists(RenderAnimationDir) == False):
         os.mkdir(RenderAnimationDir)
 
-    if (path.exists(RenderAnimationDir + projectName) == False):
+    if (os.path.exists(RenderAnimationDir + projectName) == False):
         os.mkdir(RenderAnimationDir + projectName)
 
 
