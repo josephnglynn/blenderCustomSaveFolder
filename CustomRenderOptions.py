@@ -96,9 +96,8 @@ class SimpleRender(bpy.types.Operator):
 
     def execute(self, context):
         bpy.context.scene.render.image_settings.file_format = "PNG"
-        bpy.context.scene.render.filepath = getFileNameAndLocation(
-            RenderOutputDir)
-        bpy.ops.render.render(animation=False, write_still=True)
+        bpy.context.scene.render.filepath = getFileNameAndLocation(RenderOutputDir)
+        bpy.ops.render.render('INVOKE_DEFAULT',animation=False, write_still=True)
         return {'FINISHED'}
 
 
@@ -109,9 +108,8 @@ class SimpleRenderAnimation(bpy.types.Operator):
     def execute(self, context):
         bpy.context.scene.render.image_settings.file_format = "FFMPEG"
         bpy.context.scene.render.ffmpeg.constant_rate_factor = "PERC_LOSSLESS"
-        bpy.context.scene.render.filepath = getFileNameAndLocation(
-            RenderAnimationDir)
-        bpy.ops.render.render(animation=True, write_still=True)
+        bpy.context.scene.render.filepath = getFileNameAndLocation(RenderAnimationDir)
+        bpy.ops.render.render('INVOKE_DEFAULT',animation=True, write_still=True)
         return {'FINISHED'}
 
 
